@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Nursing Clinical Decision Easier with AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+     <style>
+        .navbar {
+            width: 100%;
+            overflow: hidden;
+            background-color: rgb(250, 250, 252);
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a {
+            display: block;
+            color: rgb(57, 57, 57);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .navbar a:hover {
+            color: black;
+        }
+
+        .word-counter {
+            color: grey;
+            font-size: 10px;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        #input-container-hidden {
+            display: none;
+        }
+
+        .checkbox-row {
+            max-width: 95%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: 2.5%;
+            padding-right: 2.5%;
+        }
+
+        .checkbox-wrapper-1 {
+            flex: 0 0 20%;
+            box-sizing: border-box;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+        form {
+            width: 100%;
+            text-align: center;
+        }
+
+        #translated-container,
+        #selected-container,
+        #input-container,
+        #input-container-q,
+        #summary-container,
+        #searching-container,
+        #key_phrases_info {
+            width: 80%;
+            border: 0.5px solid rgb(77, 77, 77);
+            border-radius: 10px;
+            display: block;
+            resize: none;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        #translated-container,
+        #selected-container,
+        #input-container {
+            min-height: 350px;
+            max-height: 550px;
+        }
+
+        #summary-container,
+        #searching-container {
+            min-height: 150px;
+            max-height: 150px;
+        }
+
+        #key_phrases_info {
+            min-height: 80px;
+            max-height: 800px;
+        }
+
+        #input-container-q {
+            min-height: 10px;
+            max-height: 550px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-container h1 {
+            font-weight: bold;
+        }
+
+        .text-container h6 {
+            font-weight: bold;
+            color: #4a4a4a;
+        }
+
+        p {
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+
+        .text-container p {
+            margin-bottom: -2px;
+            color: #212121;
+        }
+
+        .checkbox-wrapper-1 *,
+        .checkbox-wrapper-1::after,
+        .checkbox-wrapper-1::before {
+            box-sizing: border-box;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted {
+            margin: 0;
+            width: 0;
+            height: 0;
+            display: inline;
+            appearance: none;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted + label:before {
+            content: "";
+            display: inline-block;
+            vertical-align: top;
+            height: 1.15em;
+            width: 1.15em;
+            margin-right: 0.6em;
+            color: rgba(0, 0, 0, 0.275);
+            border: solid 0.06em;
+            box-shadow: 0 0 0.04em, 0 0.06em 0.16em -0.03em inset, 0 0 0 0.07em transparent inset;
+            border-radius: 0.2em;
+            background: url('data:image/svg+xml;charset=UTF-8,<svg ...></svg>') no-repeat center, white;
+            background-size: 0;
+            transition: color 0.1s, border 0.1s, background 0.15s, box-shadow 0.1s;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted:enabled + label:active:before,
+        .checkbox-wrapper-1 [type=checkbox].substituted:enabled:active + label:before {
+            background-color: #f0f0f0;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted:checked + label:before {
+            background-color: #3B99FC;
+            background-size: 0.75em;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted:checked:enabled + label:active:before,
+        .checkbox-wrapper-1 [type=checkbox].substituted:checked:enabled:active + label:before {
+            background-color: #0a7ffb;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted:focus + label:before {
+            box-shadow: 0 0 0.04em, 0 0.06em 0.16em -0.03em transparent inset, 0 0 0 0.07em rgba(0, 0, 0, 0.1) inset, 0 0 0 3.3px rgba(65, 159, 255, 0.55);
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted:disabled + label:before {
+            opacity: 0.5;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted.dark + label:before {
+            background-color: #222;
+            color: rgba(255, 255, 255, 0.275);
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted.dark:enabled + label:active:before,
+        .checkbox-wrapper-1 [type=checkbox].substituted.dark:enabled:active + label:before {
+            background-color: #444;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted.dark:checked + label:before {
+            background-color: #a97035;
+        }
+
+        .checkbox-wrapper-1 [type=checkbox].substituted.dark:checked:enabled + label:active:before,
+        .checkbox-wrapper-1 [type=checkbox].substituted.dark:checked:enabled:active + label:before {
+            background-color: #c68035;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        #chat-history,
+        #input_text {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            letter-spacing: 0.3px;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin-top: 0px;
+        }
+
+        button {
+            height: 35px;
+            width: 150px;
+            font-size: 13px;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 50px;
+            color: rgb(26, 26, 26);
+            border: 1px solid #464646;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: rgb(211, 211, 211);
+            color: black;
+        }
+
+        h1,
+        h3 {
+            color: #4d4d4d;
+            margin: 1%;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0px 20px 20px 20px;
+        }
+
+        .search-container p {
+            font-size: 12px;
+            color: rgb(0, 8, 66);
+        }
+
+        .custom-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo {
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .search-box {
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+            flex-grow: 1;
+        }
+
+        .search-box::placeholder {
+            color: #aaa;
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 600px) {
+            .links-container {
+                flex-direction: column;
+            }
+        }
+
+        .chat-message-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .chat-message {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 15px;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #f0f0f0;
+            margin-left: auto;
+            align-self: flex-end;
+            max-width: 60%;
+        }
+
+        .bot-message {
+            background-color: #f1f0f000;
+            margin-right: auto;
+            display: inline-block;
+            align-self: flex-start;
+            max-width: 90%;
+        }
+
+        .bot-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 45px;
+            width: 80%;
+            padding: 5px 10px;
+            margin: 10px auto;
+            background-color: #f4f4f4;
+            border-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-icon {
+            margin-left: 10px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        #input_text {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            resize: none;
+            max-height: 150px;
+            min-height: 20px;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+
+        .send-btn {
+            background-color: #ddd;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.0s ease;
+        }
+
+        .send-btn:hover {
+            background-color: #bbb;
+        }
+
+        .send-btn:active {
+            background-color: #aaa;
+        }
+
+        .send-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .chat-history {
+            width: 80%;
+            margin: 20px auto;
+            margin-top: 1%;
+            margin-bottom: 0px;
+            padding: 10px;
+            border: 1px solid #cccccc00;
+            border-radius: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f900;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 200px);
+        }
+
+        .button-options {
+            margin-top: -30px;
+            margin-left: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+    </style>
+    
+
+</head>
+<body class="flex-container">
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/main">Question</a>
+        <a href="/data">Data</a>
+        <a href="/about">About</a>
+    </div>
+
+    <h3>Nursing Clinical Decision Education System</h3>
+
+    <div id="chat-history" class="chat-history">
+        {% for message in messages %}
+        <div class="chat-message-container">
+            {% if message.type == 'bot-message' %}
+            <img src="{{ url_for('static', filename='ykliu.png') }}" alt="Bot Avatar" class="bot-avatar">
+            {% endif %}
+            <div class="chat-message {{ message.type }}" id="message-{{ loop.index }}">
+                {{ message.text | safe }}
+            </div>
+        </div>
+        {% if message.type == 'bot-message' and loop.last %}
+        <div class="button-options" id="button-options">
+            <button class="response-btn" data-response="Explain More">Explain More</button>
+            <button class="response-btn" data-response="Original Case">Original Case</button>
+            <button class="response-btn" data-response="Similar Scenario">Similar Scenario</button>
+            <button class="response-btn" data-response="Relevant Theories">Relevant Theories</button>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <form method="POST" class="chat-input-area">
+        <div class="input-container">
+            <div class="input-icon">📎</div>
+            <textarea id="input_text" name="input_text" rows="1" placeholder="Message NursingGPT"></textarea>
+            <button type="submit" class="send-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/992/992703.png" alt="Send Icon">
+            </button>
+        </div>
+    </form>
+
+    <script>
+        window.onload = function() {
+            const messages = document.querySelectorAll('.chat-message');
+            messages.forEach(message => {
+                let content = message.textContent.trim();
+                message.innerHTML = marked.parse(content);
+            });
+
+            scrollToBottom();
+        };
+
+        function scrollToBottom() {
+            const chatHistory = document.getElementById('chat-history');
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function() {
+            setTimeout(scrollToBottom, 100);
+        });
+
+        const inputText = document.getElementById('input_text');
+        const inputContainer = document.querySelector('.input-container');
+        const chatHistory = document.querySelector('.chat-history');
+        
+        const maxContainerHeight = 240;
+        const minContainerHeight = 45;
+        const minInputHeight = 20;
+        const initialChatHistoryHeight = 550;
+        
+        inputText.addEventListener('input', function() {
+            if (inputText.value.trim() === '') {
+                inputText.style.height = `${minInputHeight}px`;
+                inputContainer.style.height = `${minContainerHeight}px`;
+                chatHistory.style.maxHeight = `${initialChatHistoryHeight}px`;
+            } else {
+                inputText.style.height = 'auto';
+                inputText.style.height = `${inputText.scrollHeight}px`;
+                let newHeight = Math.min(inputText.scrollHeight + 20, maxContainerHeight);
+                inputContainer.style.height = `${newHeight}px`;
+                chatHistory.style.maxHeight = `${initialChatHistoryHeight - (newHeight - minContainerHeight)}px`;
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('response-btn')) {
+                const response = event.target.getAttribute('data-response');
+                inputText.value = response;
+                document.querySelector('form').submit();
+                removeButtonOptions();
+            }
+        });
+
+        const formElement = document.querySelector('form');
+        formElement.addEventListener('submit', function(event) {
+            removeButtonOptions();
+        });
+
+        function removeButtonOptions() {
+            const buttonOptions = document.getElementById('button-options');
+            if (buttonOptions) {
+                buttonOptions.remove();
+            }
+        }
+    </script>
+
+</body>
+</html>

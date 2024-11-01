@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nursing Clinical Decision Education System</title>
+    
+    <script type="text/javascript">
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+
+    <style>
+        /* Navbar styles */
+        .navbar {
+            width: 100%;
+            overflow: hidden;
+            background-color: rgb(250, 250, 252);
+            padding: 0 20px;
+            display: flex; 
+            justify-content: center;
+        }
+
+        .navbar a {
+            display: block;
+            color: rgb(57, 57, 57);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .navbar a:hover {
+            color: black;
+        }
+
+        /* Body and container styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-image: url('/static/background.png'); 
+            background-size: cover; 
+            background-attachment: fixed; 
+        }
+
+        .container {
+            position: absolute;
+            bottom: 0;
+            width: calc(100% - 100px); 
+            padding: 20px;
+            margin-left: 100px;
+            margin-bottom: 150px;
+            text-align: left;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        /* Flex container styles */
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin-top: 0px;
+        }
+
+        /* Button styles */
+        button {
+            height: 35px;
+            width: 250px;
+            font-size: 13px;
+            margin-top: 20px;
+            margin-right: 20px;
+            background-color: rgb(87, 87, 87);
+            color: rgb(255, 255, 255);
+            border-radius: 50px; 
+            transition: background-color 0.2s; 
+            border: none;
+        }
+
+        button:hover {
+            background-color: rgb(211, 211, 211); 
+            color: black;
+        }
+
+        /* Specific button styles */
+        #button-1 {
+            height: 35px;
+            width: 250px;
+            font-size: 13px;
+            margin-top: 20px;
+            margin-right: 20px;
+            background-color: rgb(211, 211, 211); 
+            color: rgb(35, 35, 35);
+            border-radius: 50px; 
+            transition: background-color 0.2s; 
+            border: none;
+        }
+
+        #button-1:hover {
+            background-color: rgb(124, 122, 122); 
+            color: white;
+        }
+
+        /* Heading and paragraph styles */
+        h1 {
+            font-size: 300%;
+            color: #2b2b2b;
+            margin-top: 0%;
+        }
+
+        h4 {
+            color: #4d4d4d;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-top: 10px;  
+            margin-bottom: 10px; 
+            color: #4d4d4d;
+        }
+    </style>
+</head>
+
+<body class="flex-container">
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/main">Question</a>
+        <a href="/data">Data</a>
+        <a href="/about">About</a>
+    </div>
+
+    <div class="container" id="container">
+        <h4>Learn Nursing Clinical Decision Easier with AI</h4>
+        <h1>AI Nursing</h1>
+        <p>A tool designed to enhance clinical decision-making for nursing training using advanced AI technology.</p>
+        <br>
+        <button onclick="redirectTo('/main')">Start Learning</button>
+        <button id="button-1" onclick="redirectTo('/data')">Set Up</button>
+    </div>
+</body>
+</html>
