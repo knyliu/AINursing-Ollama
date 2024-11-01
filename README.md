@@ -1,0 +1,1 @@
+# AINursing-Ollama
